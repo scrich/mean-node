@@ -13,3 +13,22 @@ Absolom:/ scrich$ ls -ld /data/db
 drwxr-xr-x  2 scrich  wheel  68 17 Mar 18:42 /data/db
 
 This is not the recommended way to set positions, but the mongod user did not exist.
+
+
+start up mongo:
+If you have installed mongodb through homebrew then you can simply start mongodb through
+
+brew services start mongodb
+Then access the shell by
+
+mongo
+You can shut down your db by
+
+brew services stop mongodb
+For more options
+
+brew info mongodb
+
+
+
+http://stackoverflow.com/questions/18452023/installing-and-running-mongodb-on-osx
