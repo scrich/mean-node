@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang=en>
+    <head>
+        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
+    </head>
+    <body ng-app='app'>
+        <div class='container'>
+            <h1>Recent posts - hardcoded</h1>
+            <ul class='list-group'>
+                <li class='list-group-item'>
+                    <strong>@dickeyxxx</strong>
+                    <span>Node rules</span>
+                </li>
+                <li class='list-group-item'>
+                    <strong>@jeffdickey</strong>
+                    <span>Trying out angular.js...</span>
+                </li>
+            </ul>
+        </div>
+        <div ng-controller="PostsCtrl" class='container'>
+            <h1>Recent posts - angular</h1>
+            <form role='form'>
+                <div class='form-group'>
+                    <div class='input-group'>
+                        <input ng-model='postBody' class='form-control' />
+                        <span class='input-group-btn'>
+                            <button ng-click='addPost()' class='btn btn-default'>Add post</button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+            <ul class='list-group'>
+                <li ng-repeat="post in posts" class='list-group-item'>
+                    <strong>@{{post.username}}</strong>
+                    <span>{{ post.body }}</span>
+                </li>
+            </ul>
+        </div>
+        <script src='https://ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.js'></script>
+        <script>
+            var app = angular.module('app', [])
+            app.controller('PostsCtrl', function ($scope, $http) {
+                $http.get('http://localhost:3000/api/posts')
+                .success(function (posts) {
+                    $scope.posts = posts
+                })
+
+                $scope.addPost = function () {
+                    if ($scope.postBody) {
+                        $scope.posts.unshift ({
+                            username: 'dickeyxxx',
+                            body: $scope.postBody
+                        })
+                        $scope.postBody = null
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
