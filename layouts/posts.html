@@ -4,19 +4,6 @@
         <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.css">
     </head>
     <body ng-app='app'>
-        <div class='container'>
-            <h1>Recent posts - hardcoded</h1>
-            <ul class='list-group'>
-                <li class='list-group-item'>
-                    <strong>@dickeyxxx</strong>
-                    <span>Node rules</span>
-                </li>
-                <li class='list-group-item'>
-                    <strong>@jeffdickey</strong>
-                    <span>Trying out angular.js...</span>
-                </li>
-            </ul>
-        </div>
         <div ng-controller="PostsCtrl" class='container'>
             <h1>Recent posts - angular</h1>
             <form role='form'>
@@ -30,7 +17,7 @@
                 </div>
             </form>
             <ul class='list-group'>
-                <li ng-repeat="post in posts" class='list-group-item'>
+                <li ng-repeat="post in posts | orderBy:'-date'" class='list-group-item'>
                     <strong>@{{post.username}}</strong>
                     <span>{{ post.body }}</span>
                 </li>
@@ -47,11 +34,13 @@
 
                 $scope.addPost = function () {
                     if ($scope.postBody) {
-                        $scope.posts.unshift ({
-                            username: 'dickeyxxx',
-                            body: $scope.postBody
+                        $http.post('/api/posts', {
+                            username:   'scrich',
+                            body:       $scope.postBody
+                        }).success(function (post) {
+                            $scope.posts.unshift(post)
+                            $scope.postBody = null
                         })
-                        $scope.postBody = null
                     }
                 }
             })

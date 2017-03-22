@@ -4,6 +4,12 @@ var bodyParser = require('body-parser')
 var app = express()
 app.use(bodyParser.json())
 
+// GET the flat html page
+
+app.get('/', function (req, res) {
+    res.sendFile(__dirname + '/layouts/posts.html')
+})
+
 // GET from the database
 
 app.get('/api/posts', function (req,res,next) {
